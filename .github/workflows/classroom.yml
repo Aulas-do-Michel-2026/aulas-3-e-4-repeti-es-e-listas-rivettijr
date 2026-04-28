@@ -144,4 +144,4 @@ jobs:
         EXERCICIO-4-TESTE-2_RESULTS: "${{steps.exercicio-4-teste-2.outputs.result}}"
         EXERCICIO-5_RESULTS: "${{steps.exercicio-5.outputs.result}}"
       with:
-        runners: "exercicio-1-teste-1,exercicio-1-teste-2,exercicio-2-teste"
+        runners: "exercicio-1-teste-1,exercicio-1-teste-2,exercicio-2-teste-1,exercicio-2-teste-2,exercicio-3-teste-1,exercicio-3-teste-2,exercicio-4-teste-1,exercicio-4-teste-2,exercicio-5"
