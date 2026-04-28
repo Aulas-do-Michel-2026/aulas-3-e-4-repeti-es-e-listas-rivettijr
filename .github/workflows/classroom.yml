@@ -1,0 +1,147 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Exercício 1 - Teste 1
+      id: exercicio-1-teste-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 1 - Teste 1
+        setup-command: ''
+        command: echo "5" | python exercicio_1.py
+        input: ''
+        expected-output: '15'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 1 - Teste 2
+      id: exercicio-1-teste-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 1 - Teste 2
+        setup-command: ''
+        command: echo "10" | python exercicio_1.py
+        input: ''
+        expected-output: '55'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 2 - Teste 1
+      id: exercicio-2-teste-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 2 - Teste 1
+        setup-command: ''
+        command: echo "7" | python exercicio_2.py
+        input: ''
+        expected-output: '5040'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 2 - Teste 2
+      id: exercicio-2-teste-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 2 - Teste 2
+        setup-command: ''
+        command: echo "9" | python exercicio_2.py
+        input: ''
+        expected-output: '362880'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 3 - Teste 1
+      id: exercicio-3-teste-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 3 - Teste 1
+        setup-command: ''
+        command: echo "1, 2, 3, 4, 5" | python exercicio_3.py
+        input: ''
+        expected-output: 1, 3, 5
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 3 - Teste 2
+      id: exercicio-3-teste-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 3 - Teste 2
+        setup-command: ''
+        command: echo "44, 99, 0, 101, 105" | python exercicio_3.py
+        input: ''
+        expected-output: 99, 101, 105
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 4 - Teste 1
+      id: exercicio-4-teste-1
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 4 - Teste 1
+        setup-command: ''
+        command: printf "44, 99, 0, 101, 105\n1, 1, 1\n" | python exercicio_4.py
+        input: ''
+        expected-output: "^.*[Pp]rimeira.*$"
+        comparison-method: regex
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 4 - Teste 2
+      id: exercicio-4-teste-2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 4 - Teste 2
+        setup-command: ''
+        command: printf "1, 1, 1\n1, 1, 1\n" | python exercicio_4.py
+        input: ''
+        expected-output: "^.*[Aa]mbas.*$"
+        comparison-method: regex
+        timeout: 10
+        max-score: 1
+
+    - name: Exercício 5
+      id: exercicio-5
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Exercício 5
+        setup-command: ''
+        command: python exercicio_5.py
+        input: ''
+        expected-output: '5'
+        comparison-method: contains
+        timeout: 10
+        max-score: 1
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        EXERCICIO-1-TESTE-1_RESULTS: "${{steps.exercicio-1-teste-1.outputs.result}}"
+        EXERCICIO-1-TESTE-2_RESULTS: "${{steps.exercicio-1-teste-2.outputs.result}}"
+        EXERCICIO-2-TESTE-1_RESULTS: "${{steps.exercicio-2-teste-1.outputs.result}}"
+        EXERCICIO-2-TESTE-2_RESULTS: "${{steps.exercicio-2-teste-2.outputs.result}}"
+        EXERCICIO-3-TESTE-1_RESULTS: "${{steps.exercicio-3-teste-1.outputs.result}}"
+        EXERCICIO-3-TESTE-2_RESULTS: "${{steps.exercicio-3-teste-2.outputs.result}}"
+        EXERCICIO-4-TESTE-1_RESULTS: "${{steps.exercicio-4-teste-1.outputs.result}}"
+        EXERCICIO-4-TESTE-2_RESULTS: "${{steps.exercicio-4-teste-2.outputs.result}}"
+        EXERCICIO-5_RESULTS: "${{steps.exercicio-5.outputs.result}}"
+      with:
+        runners: exercicio-1-teste-1,exercicio-1-teste-2,exercicio-2-teste
